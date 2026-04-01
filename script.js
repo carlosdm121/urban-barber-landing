@@ -1,31 +1,52 @@
-//=====MENU QUE CAMBIA AL HACER SCROLL =====
-window.addEventListener("scroll", function(){
-    constheader = document.querySelector("header");
-    if(windows.scrollY > 50){
-        Headers.classList.add("scrolled");
+// ===== MENU TOGGLE (MOBILE) =====
+const menuToggle = document.querySelector(".menu-toggle");
+const nav = document.querySelector(".navbar nav");
+
+menuToggle.addEventListener("click", function() {
+    menuToggle.classList.toggle("active");
+    nav.classList.toggle("open");
+});
+
+// Cerrar menú al hacer click en un enlace
+nav.querySelectorAll("a").forEach(function(link) {
+    link.addEventListener("click", function() {
+        menuToggle.classList.remove("active");
+        nav.classList.remove("open");
+    });
+});
+
+// Cerrar menú al hacer click fuera
+document.addEventListener("click", function(e) {
+    if (!e.target.closest(".navbar")) {
+        menuToggle.classList.remove("active");
+        nav.classList.remove("open");
     }
 });
 
-// ===== ANIMACION REVEAL AL HACER SCROLL =====
+// ===== NAVBAR SCROLL EFFECT =====
+window.addEventListener("scroll", function() {
+    const header = document.querySelector(".navbar");
+    if (window.scrollY > 50) {
+        header.classList.add("scrolled");
+    } else {
+        header.classList.remove("scrolled");
+    }
+});
 
-function reveal(){
+// ===== REVEAL ON SCROLL =====
+function reveal() {
     const reveals = document.querySelectorAll(".reveal");
 
-    for(let i = 0; i<reveals.length; i++){
+    for (let i = 0; i < reveals.length; i++) {
         const windowHeight = window.innerHeight;
-        const elementTop =
-        reveals[i].getBoundingClientRect().top;
+        const elementTop = reveals[i].getBoundingClientRect().top;
         const elementVisible = 100;
 
-        if(elementTop<windowHeight - elementVisible){
+        if (elementTop < windowHeight - elementVisible) {
             reveals[i].classList.add("active");
         }
     }
 }
 
 window.addEventListener("scroll", reveal);
-
-
-// ===== EJECUTAR REVEAL AL CARGAR LA PAGINA =====
-
 reveal();
